@@ -9,10 +9,6 @@ public class UsrHomeController {
 	public String showMain() {
 		return "usr/home/main";
 	}
-	@RequestMapping("/usr/home/main2")
-	public String showMain2() {
-		return "usr/home/main2";
-	}
 	
 	@RequestMapping("/")
 	public String showRoot() {
