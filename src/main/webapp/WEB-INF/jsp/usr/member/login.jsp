@@ -8,8 +8,8 @@
 				<br /> <input type="hidden" name="afterLoginUri" value=${param.afterLoginUri } />
 				<div style="display: inline-block; text-align: left;">
 						<div style="font-size: 15px; font-weight: bold;">
-								아이디 <br /> 
-								<input class="input input-bordered w-full max-w-xs" type="text" placeholder="아이디" name="loginId" autocomplete="on" required />
+								이메일 <br /> 
+								<input class="input input-bordered w-full max-w-xs" type="text" placeholder="이메일" name="email" autocomplete="on" required />
 						</div>
 						<br />
 						<div style="font-size: 15px; font-weight: bold;">

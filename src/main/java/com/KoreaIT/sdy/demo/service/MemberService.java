@@ -17,23 +17,15 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 	
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
-		// 로그인 아이디 중복체크
-		Member member = getMemberByLoginId(loginId);
+	public ResultData doJoin(String email, String loginPw, String name, String nickname, String cellphoneNum) {
+		// 로그인 이메일 중복체크
+		Member member = getMemberByEmail(email);
 
 		if (member != null) {
-			return ResultData.from("F-7", Ut.f("이미 사용중인 아이디(%s)입니다", loginId));
+			return ResultData.from("F-7", Ut.f("이미 사용중인 이메일(%s)입니다", email));
 		}
 
-		// 이름 + 이메일 중복체크
-		member = memberRepository.getMemberByNameAndEmail(name, email);
-
-		if (member != null) {
-			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
-		}
-
-		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		memberRepository.doJoin(email, loginPw, name, nickname, cellphoneNum);
 
 		return ResultData.from("S-1", "회원가입이 완료되었습니다");
 	}
@@ -54,6 +46,11 @@ public class MemberService {
 
 	public Member getMemberByNickname(String nickname) {
 		return memberRepository.getMemberByNickname(nickname);
+	}
+
+	public ResultData modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum) {
+		memberRepository.modifyMember(id, loginPw, name, nickname, cellphoneNum);
+		return ResultData.from("S-1", "회원 정보 수정이 완료되었습니다");
 	}
 }
 

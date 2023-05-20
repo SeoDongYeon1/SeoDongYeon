@@ -106,48 +106,6 @@
 		form.submit();
 	}
 	
-	const CheckLoginIdDupDebounced = _.debounce(checkLoginIdDup, 600);
-	// 로그인 아이디 중복체크 ajax
-	function checkLoginIdDup(el) {
-		const form = $(el).closest('form').get(0);
-
-		if (form.loginId.value.length == 0) {
-			$('.checkloginIdDup-msg').html('<div class="mt-2 text-red-500">아이디를 입력해 주세요.</div>');
-			validLoginId = "";
-			return;
-		}
-		
-		if (form.loginId.value == validLoginId) {
-			return;
-		}
-		
-		if (form.loginId.value.length < 5 || form.loginId.value.length > 20) {
-			$('.checkloginIdDup-msg').html('<div class="mt-2 text-red-500">5~20글자 사이로 아이디를 입력해 주세요.</div>');
-			return;
-		}
-
-		if (form.loginId.value.length >= 5) {
-			var action = "../member/getLoginIdDup";
-			$.get(action, {
-
-				isAjax : 'Y',
-				loginId : form.loginId.value
-
-			}, function(data) {
-				
-				if (data.success) {
-				$('.checkloginIdDup-msg').html('<div class="mt-2">' + data.msg + '</div>');
-					validLoginId = data.data1;
-					
-				} else {
-					$('.checkloginIdDup-msg').html('<div class="mt-2 text-red-500">' + data.msg + '</div>');
-					validLoginId = "";
-				}
-
-			}, 'json');
-		}
-	}
-	
 	const CheckEmaildupDebounced = _.debounce(checkEmaildup, 600);
 	
 	// 이메일 중복체크 ajax
@@ -164,7 +122,7 @@
 			return;
 		}
 
-		if (form.email.value.length >= 5) {
+		if (form.email.value.length >= 1) {
 			 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 			
 			if(!emailPattern.test(form.email.value)) {
@@ -369,12 +327,11 @@
 
 								<tbody>
 										<tr>
-												<th>아이디</th>
+												<th>이메일</th>
 										</tr>
 										<tr>
-												<td><input onkeyup="CheckLoginIdDupDebounced(this);" autocomplete="off" style="display: inline-block;"
-														name="loginId" class="w-full input input-bordered  max-w-xs" placeholder="아이디를 입력해주세요" />
-														<div class="checkloginIdDup-msg"></div></td>
+												<td><input onkeyup="CheckEmaildupDebounced(this);" name="email" class="w-full input input-bordered  max-w-xs" placeholder="이메일을 입력해주세요" />
+												<div class="checkEmailDup-msg"></div></td>
 										</tr>
 										<tr>
 												<th>비밀번호</th>
@@ -411,13 +368,6 @@
 										<tr>
 												<td><input onkeyup="CheckCellphoneNum_Debounce(this);" name="cellphoneNum" class="w-full input input-bordered  max-w-xs" placeholder="전화번호를 입력해주세요" />
 												<div class="checkCellphoneNum-msg"></div></td>
-										</tr>
-										<tr>
-												<th>이메일</th>
-										</tr>
-										<tr>
-												<td><input onkeyup="CheckEmaildupDebounced(this);" name="email" class="w-full input input-bordered  max-w-xs" placeholder="이메일을 입력해주세요" />
-												<div class="checkEmailDup-msg"></div></td>
 										</tr>
 										<tr>
 												<td>

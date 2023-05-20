@@ -7,12 +7,11 @@
 		INSERT INTO `member` 
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId = #{loginId},
+		email = #{email},
 		loginPw = #{loginPw},
 		`name` = #{name},
 		`nickname` = #{nickname},
-		cellphoneNum = #{cellphoneNum},
-		email = #{email};
+		cellphoneNum = #{cellphoneNum};
 	</insert>
 	
 	<select id="getMemberByLoginId" resultType="Member">
@@ -45,5 +44,17 @@
 		FROM `member`
 		WHERE nickname = #{nickname};
 	</select>
+	
+	<update id="modifyMember">
+		UPDATE `member`
+		<set>
+			updateDate= NOW(),
+			<if test="loginPw != null and loginPw != ''">loginPw = #{loginPw},</if>
+			<if test="name != null and name != ''">`name` = #{name},</if>
+			<if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+			<if test="cellphoneNum != null and cellphoneNum != ''">cellphoneNum = #{cellphoneNum},</if>
+		</set>		
+		WHERE id = #{id}
+	</update>
 	
 </mapper>

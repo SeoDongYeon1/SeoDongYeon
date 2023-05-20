@@ -24,7 +24,7 @@ public class Rq {
 	@Getter
 	private Member loginedMember;
 	@Getter
-	private String loginedMemberLoginId;
+	private String loginedMemberEmail;
 	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
@@ -39,19 +39,19 @@ public class Rq {
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
-		String loginedMemberLoginId = null;
+		String loginedMemberEmail = null;
 
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 			loginedMember = (Member) session.getAttribute("loginedMember");
-			loginedMemberLoginId = (String) session.getAttribute("loginedMemberLoginId");
+			loginedMemberEmail = (String) session.getAttribute("loginedMemberEmail");
 		}
 
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
-		this.loginedMemberLoginId = loginedMemberLoginId;
+		this.loginedMemberEmail = loginedMemberEmail;
 		
 		this.req.setAttribute("rq", this);
 	}
@@ -81,7 +81,7 @@ public class Rq {
 	public void login(Member member) {
 		session.setAttribute("loginedMemberId", member.getId());
 		session.setAttribute("loginedMember", member);
-		session.setAttribute("loginedMemberLoginId", member.getLoginId());
+		session.setAttribute("loginedMemberEmail", member.getEmail());
 	}
 
 	public void logout() {
